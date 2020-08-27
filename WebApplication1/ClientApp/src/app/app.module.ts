@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { MapComponent } from './map/map.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MapComponent } from './map/map.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    MapComponent
+    MapComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +31,7 @@ import { MapComponent } from './map/map.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'map', component: MapComponent },
+      { path: 'chart', component: ChartComponent }
     ])
   ],
   providers: [],
