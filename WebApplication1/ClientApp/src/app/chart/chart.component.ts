@@ -1,48 +1,83 @@
 import { Component } from '@angular/core';
 import { Chart } from 'node_modules/chart.js'
+import { ChartService } from './chart.service'
+import {GDPData}  from './GDPData'
 
 @Component({
   selector: 'app-chart-component',
-  templateUrl: './chart.component.html'
+  templateUrl: './chart.component.html',
+  providers: [ChartService]
 })
 export class ChartComponent {
+  Title: string = "";
+  public Forecasts: GDPData[];
+
+  constructor(private _service: ChartService) {
+    this.Title = this._service.GetData();
+    this.Forecasts = this._service.GetGDPData();
+  }
+
   ngOnInit() {
+    this.setupChart();
+  }
+
+  setupChart() {
     var ctx = document.getElementById('myChart');
+    console.log(this.Forecasts.length);
     var myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
+          data: this.getLineData(this.Forecasts.pop()),
+          label: "Africa",
+          borderColor: "#3e95cd",
+          fill: false
+        }, {
+          data: this.getLineData(this.Forecasts.pop()),
+          label: "Asia",
+          borderColor: "#8e5ea2",
+          fill: false
+        }, {
+          data: [178, 190, 203, 276, 408, 547, 675, 734],
+          label: "Europe",
+          borderColor: "#3cba9f",
+          fill: false
+        }, {
+          data: [10, 16, 24, 38, 74, 167, 508, 784],
+          label: "Latin America",
+          borderColor: "#e8c3b9",
+          fill: false
+        }, {
+          data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
+          label: "North America",
+          borderColor: "#c45850",
+          fill: false
+        }
+        ]
       },
       options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
+        title: {
+          display: true,
+          text: 'World population per region (in millions)'
         }
       }
     });
   }
+
+  
+  getLineData(gdpdatavalue: GDPData) {
+    var data = []
+    data.push(gdpdatavalue.y2012)
+    data.push(gdpdatavalue.y2013)
+    data.push(gdpdatavalue.y2014)
+    data.push(gdpdatavalue.y2015)
+    data.push(gdpdatavalue.y2016)
+    data.push(gdpdatavalue.y2017)
+    data.push(gdpdatavalue.y2018)
+    data.push(gdpdatavalue.y2019)
+
+  return data
 }
+}
+
