@@ -33,33 +33,7 @@ export class ChartComponent {
       type: 'line',
       data: {
         labels: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
-        datasets: [{
-          data: this.getLineData(this.Forecasts.pop()),
-          label: "Africa",
-          borderColor: "#3e95cd",
-          fill: false
-        }, {
-          data: this.getLineData(this.Forecasts.pop()),
-          label: "Asia",
-          borderColor: "#8e5ea2",
-          fill: false
-        }, {
-          data: [178, 190, 203, 276, 408, 547, 675, 734],
-          label: "Europe",
-          borderColor: "#3cba9f",
-          fill: false
-        }, {
-          data: [10, 16, 24, 38, 74, 167, 508, 784],
-          label: "Latin America",
-          borderColor: "#e8c3b9",
-          fill: false
-        }, {
-          data: [6, 3, 2, 2, 7, 26, 82, 172, 312, 433],
-          label: "North America",
-          borderColor: "#c45850",
-          fill: false
-        }
-        ]
+        datasets: []
       },
       options: {
         title: {
@@ -68,10 +42,16 @@ export class ChartComponent {
         }
       }
     });
+
+    this.getLineData(myChart, this.Forecasts.pop(), "#3e95cd");
+    this.getLineData(myChart, this.Forecasts.pop(), "#8e5ea2");
+    this.getLineData(myChart, this.Forecasts.pop(), "#3cba9f");
+    this.getLineData(myChart, this.Forecasts.pop(), "#e8c3b9");
+    this.getLineData(myChart, this.Forecasts.pop(), "#c45850");
   }
 
   
-  getLineData(gdpdatavalue: GDPData) {
+  getLineData(chart,gdpdatavalue: GDPData, color:string) {
     var data = []
     data.push(gdpdatavalue.y2012)
     data.push(gdpdatavalue.y2013)
@@ -81,8 +61,14 @@ export class ChartComponent {
     data.push(gdpdatavalue.y2017)
     data.push(gdpdatavalue.y2018)
     data.push(gdpdatavalue.y2019)
+    console.log(gdpdatavalue.country);
+    var label = gdpdatavalue.country;
+    var borderColor =  color;
+    var fill = false;
+    var dataset = { data, label, borderColor, fill };
+    chart.data.datasets.push(dataset);
+    chart.update();
+  }
 
-  return data
-}
 }
 
