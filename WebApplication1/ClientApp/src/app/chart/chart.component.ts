@@ -14,11 +14,16 @@ export class ChartComponent {
 
   constructor(private _service: ChartService) {
     this.Title = this._service.GetData();
-    this.Forecasts = this._service.GetGDPData();
+    this._service.GetGDPData().subscribe(result => {
+      console.log("in constructor");
+      console.log(result);
+      this.Forecasts = result;
+      this.setupChart();
+   }, error => console.error(error));
   }
 
   ngOnInit() {
-    this.setupChart();
+    
   }
 
   setupChart() {

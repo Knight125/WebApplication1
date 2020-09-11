@@ -1,31 +1,39 @@
 import { Injectable, Inject } from '@angular/core';
 import { GDPData } from './GDPData'
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ChartService {
   public data: GDPData[];
+  baseUrl: string;
+  http: HttpClient;
+  dataSub: Observable<GDPData[]>;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    console.log("here");
-    http.get<GDPData[]>(baseUrl + 'gdpdata').subscribe(result => {
-      console.log("in get data");
-      this.data = result;
-      console.log(result);
-    }, error => console.error(error));
-    console.log("after");
+    this.baseUrl = baseUrl;
+    this.http = http;
+   
   }
 
   GetData(): string{
     return "I am string";
   }
 
-  GetGDPData(): GDPData[] {
-    if (this.data == null) {
-      this.SetPresetData();
-      console.log("couldn't get data from db");
-    }
-    return this.data;
+  GetGDPData(): any {
+ //   if (this.data == null) {
+ //     this.SetPresetData();
+ //     console.log("couldn't get data from db");
+  //  }
+  //  return this.data;
+    console.log("here");
+    return this.http.get<GDPData[]>(this.baseUrl + 'gdpdata');
+    //return this.http.get<GDPData[]>(this.baseUrl + 'gdpdata').map(result => {
+    //  console.log("in get data");
+    //  console.log(result);
+    //  return result;
+   // }, error => console.error(error));
+   // console.log("after");
   }
 
   SetPresetData() {
