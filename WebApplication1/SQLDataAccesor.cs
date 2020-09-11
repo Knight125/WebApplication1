@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,19 +22,19 @@ namespace WebApplication1
         {
             Console.WriteLine("Hello World!");
             ConnectToDb();
-            data = GetData(sqlConnection);
+            data = GetData();
             sqlConnection.Close();
         }
 
         private void ConnectToDb()
         {
-            string connetionString;
-            connetionString = @"Data Source=logcoptestdbserver.database.windows.net;Initial Catalog=LogcopTestDb;User ID=kAdminDb;Password=Ohio!Ohio!";
-            sqlConnection = new SqlConnection(connetionString);
+            string connectionString;
+            connectionString = @"Data Source=logcoptestdbserver.database.windows.net;Initial Catalog=LogcopTestDb;User ID=kAdminDb;Password=Ohio!Ohio!";
+            sqlConnection = new SqlConnection(connectionString);
             sqlConnection.Open();
         }
 
-        private List<GDPData> GetData(SqlConnection cnn)
+        private List<GDPData> GetDataOld(SqlConnection cnn)
         {
             List<GDPData> data = new List<GDPData>();
             SqlCommand command;
@@ -61,5 +63,14 @@ namespace WebApplication1
             }
             return data;
         }
-    }
+
+        private List<GDPData> GetData()
+        {
+            String connectionString = @"Data Source=logcoptestdbserver.database.windows.net;Initial Catalog=LogcopTestDb;User ID=kAdminDb;Password=Ohio!Ohio!";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                return db.Query<GDPData>("Select * from gdpVsDebt").ToList();
+            }
+        }
+        }
 }

@@ -25,24 +25,6 @@ namespace WebApplication1.Controllers
             SQLDataAccesor accesor = new SQLDataAccesor();
             List<GDPData> dataGDP = accesor.data;
             return dataGDP;
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new GDPData
-            {
-                Country = "test" + index,
-                SubjectDescriptor = "subj",
-                Units = "uni",
-                Scale = "corns",
-                Y2012 = 12.1 + index,
-                Y2013 = 13.1 + index,
-                Y2014 = 14.1 + index,
-                Y2015 = 15.1 + index,
-                Y2016 = 16.1 + index,
-                Y2017 = 17.1 + index,
-                Y2018 = 18.1 + index,
-                Y2019 = 19.1 + index,
-                EstimatesStartAfter = 2013+  index
-    })
-            .ToArray();
         }
     }
 }
