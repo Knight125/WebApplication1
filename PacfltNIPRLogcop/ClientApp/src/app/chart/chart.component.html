@@ -5,10 +5,36 @@
 <div>
   <canvas id="myChart" width="600" height="400">
   </canvas>
-  <table>
+  <table class="table table-striped">
+  <thead>
     <tr>
-      <td>test</td>
-      <td>America</td>
+      <th scope="col">#</th>
+      <th scope="col">Country</th>
+      <th scope="col">2012</th>
+      <th scope="col">2013</th>
+      <th scope="col">2014</th>
+      <th scope="col">2015</th>
+      <th scope="col">2016</th>
+      <th scope="col">2017</th>
+      <th scope="col">2018</th>
+      <th scope="col">2019</th>
     </tr>
-  </table>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of Forecasts; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        {{ forecast.country }}
+      </td>
+      <td>{{ forecast.y2012 | number }}</td>
+      <td>{{ forecast.y2013 | number }}</td>
+      <td>{{ forecast.y2014 | number }}</td>
+      <td>{{ forecast.y2015 | number }}</td>
+      <td>{{ forecast.y2016 | number }}</td>
+      <td>{{ forecast.y2017 | number }}</td>
+      <td>{{ forecast.y2018 | number }}</td>
+      <td>{{ forecast.y2019 | number }}</td>
+    </tr>
+  </tbody>
+</table>
 </div>
