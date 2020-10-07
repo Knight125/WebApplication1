@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  active = 1;
   constructor() { }
 
   ngOnInit(): void {
